@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industrial Pharmacy — Board Exam Mastery</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #1a1d25;
+    --border: #252830;
+    --accent: #e8b84b;
+    --accent2: #4b8ee8;
+    --success: #4be8a0;
+    --danger: #e84b6a;
+    --text: #e8eaf0;
+    --muted: #6b7080;
+    --highlight: rgba(232,184,75,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid pattern */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(232,184,75,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,184,75,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* Glow orbs */
+  .orb {
+    position:fixed;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:0.12;
+    pointer-events:none;
+    z-index:0;
+  }
+  .orb1 { width:500px; height:500px; background:#e8b84b; top:-150px; right:-100px; }
+  .orb2 { width:400px; height:400px; background:#4b8ee8; bottom:-100px; left:-100px; }
+
+  /* ─── HEADER ─────────────────────── */
+  header {
+    position:relative;
+    z-index:10;
+    padding: 32px 40px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--border);
+    backdrop-filter: blur(8px);
+    background: rgba(10,12,16,0.85);
+    position:sticky;
+    top:0;
+  }
+  .logo {
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .logo-icon {
+    width:42px; height:42px;
+    background: linear-gradient(135deg, var(--accent), #c4963a);
+    border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+  }
+  .logo-text { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; }
+  .logo-sub { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-top:2px; }
+
+  .header-stats {
+    display:flex;
+    gap:24px;
+    align-items:center;
+  }
+  .stat-pill {
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:100px;
+    padding:6px 14px;
+    font-size:13px;
+    font-family:'DM Mono',monospace;
+  }
+  .stat-dot {
+    width:7px; height:7px; border-radius:50%;
+  }
+
+  /* ─── LAYOUT ──────────────────────── */
+  .main-container {
+    position:relative;
+    z-index:5;
+    max-width:1100px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+  }
+
+  /* ─── CHAPTER SELECTOR ────────────── */
+  .chapter-selector {
+    margin-bottom:40px;
+  }
+  .section-label {
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .chapter-tabs {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .chapter-btn {
+    background:var(--surface);
+    border:1px solid var(--border);
+    color:var(--muted);
+    padding:9px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    transition:all 0.2s;
+    letter-spacing:0.3px;
+  }
+  .chapter-btn:hover {
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .chapter-btn.active {
+    background: linear-gradient(135deg, rgba(232,184,75,0.15), rgba(232,184,75,0.05));
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+
+  /* ─── PROGRESS ────────────────────── */
+  .progress-section {
+    margin-bottom:32px;
+  }
+  .progress-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:8px;
+  }
+  .progress-label { font-size:13px; color:var(--muted); }
+  .progress-fraction { font-family:'DM Mono',monospace; font-size:13px; color:var(--accent); }
+  .progress-track {
+    height:3px;
+    background:var(--surface2);
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .progress-fill {
+    height:100%;
+    background:linear-gradient(90deg, var(--accent), #f0c96a);
+    border-radius:3px;
+    transition:width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ─── QUESTION CARD ───────────────── */
+  .question-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:36px 40px;
+    margin-bottom:20px;
+    position:relative;
+    overflow:hidden;
+    animation: slideIn 0.35s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes slideIn {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .question-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:2px;
+    background:linear-gradient(90deg, var(--accent), transparent);
+  }
+  .q-meta {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:20px;
+  }
+  .q-number {
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    color:var(--accent);
+    background:rgba(232,184,75,0.1);
+    border:1px solid rgba(232,184,75,0.2);
+    padding:3px 10px;
+    border-radius:5px;
+    letter-spacing:1px;
+  }
+  .q-year {
+    font-size:12px;
+    color:var(--muted);
+    background:var(--surface2);
+    border:1px solid var(--border);
+    padding:3px 10px;
+    border-radius:5px;
+  }
+  .q-chapter-badge {
+    font-size:12px;
+    color:var(--accent2);
+    background:rgba(75,142,232,0.1);
+    border:1px solid rgba(75,142,232,0.2);
+    padding:3px 10px;
+    border-radius:5px;
+  }
+  .q-text {
+    font-size:17px;
+    line-height:1.65;
+    color:var(--text);
+    font-weight:400;
+    margin-bottom:28px;
+  }
+
+  /* ─── OPTIONS ─────────────────────── */
+  .options-grid {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .option-btn {
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 18px;
+    cursor:pointer;
+    text-align:left;
+    font-family:'DM Sans',sans-serif;
+    font-size:14.5px;
+    color:var(--text);
+    transition:all 0.18s ease;
+    width:100%;
+    line-height:1.5;
+  }
+  .option-btn:hover:not(:disabled) {
+    border-color:rgba(232,184,75,0.4);
+    background:var(--highlight);
+    transform:translateX(4px);
+  }
+  .option-btn:disabled { cursor:not-allowed; }
+  .option-letter {
+    min-width:28px; height:28px;
+    border-radius:7px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'DM Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    color:var(--muted);
+    flex-shrink:0;
+    margin-top:1px;
+    transition:all 0.18s;
+  }
+  .option-btn.correct {
+    border-color:var(--success);
+    background:rgba(75,232,160,0.08);
+    animation: correctPulse 0.4s ease;
+  }
+  .option-btn.correct .option-letter {
+    background:var(--success);
+    color:#0a0c10;
+    border-color:var(--success);
+  }
+  .option-btn.wrong {
+    border-color:var(--danger);
+    background:rgba(232,75,106,0.08);
+    animation: wrongShake 0.4s ease;
+  }
+  .option-btn.wrong .option-letter {
+    background:var(--danger);
+    color:#fff;
+    border-color:var(--danger);
+  }
+  .option-btn.reveal-correct {
+    border-color:rgba(75,232,160,0.3);
+    background:rgba(75,232,160,0.04);
+  }
+  .option-btn.reveal-correct .option-letter {
+    border-color:var(--success);
+    color:var(--success);
+  }
+
+  @keyframes correctPulse {
+    0% { transform:scale(1); }
+    50% { transform:scale(1.01); }
+    100% { transform:scale(1); }
+  }
+  @keyframes wrongShake {
+    0%,100% { transform:translateX(0); }
+    25% { transform:translateX(-6px); }
+    75% { transform:translateX(6px); }
+  }
+
+  /* ─── EXPLANATION ─────────────────── */
+  .explanation-box {
+    margin-top:20px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0;
+    padding:20px 22px;
+    display:none;
+    animation: fadeIn 0.35s ease;
+  }
+  .explanation-box.show { display:block; }
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(8px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .exp-header {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+  }
+  .exp-text {
+    font-size:14px;
+    line-height:1.7;
+    color:#c5c8d4;
+  }
+  .exp-answer {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(75,232,160,0.12);
+    border:1px solid rgba(75,232,160,0.25);
+    color:var(--success);
+    padding:4px 12px;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:10px;
+    font-family:'DM Mono',monospace;
+  }
+
+  /* ─── RESULT BADGE ────────────────── */
+  .result-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    font-weight:600;
+    padding:8px 16px;
+    border-radius:8px;
+    margin-top:14px;
+  }
+  .result-badge.correct-badge {
+    background:rgba(75,232,160,0.12);
+    color:var(--success);
+    border:1px solid rgba(75,232,160,0.25);
+  }
+  .result-badge.wrong-badge {
+    background:rgba(232,75,106,0.12);
+    color:var(--danger);
+    border:1px solid rgba(232,75,106,0.25);
+  }
+
+  /* ─── NAVIGATION ──────────────────── */
+  .nav-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:28px;
+  }
+  .nav-btn {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 22px;
+    border-radius:9px;
+    cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    transition:all 0.2s;
+    border:1px solid var(--border);
+    background:var(--surface2);
+    color:var(--text);
+  }
+  .nav-btn:hover:not(:disabled) {
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+  .nav-btn:disabled { opacity:0.35; cursor:not-allowed; }
+  .nav-btn.primary {
+    background:linear-gradient(135deg, var(--accent), #c4963a);
+    border-color:transparent;
+    color:#0a0c10;
+    font-weight:600;
+  }
+  .nav-btn.primary:hover:not(:disabled) {
+    filter:brightness(1.1);
+    color:#0a0c10;
+    transform:translateY(-1px);
+    box-shadow:0 6px 24px rgba(232,184,75,0.25);
+  }
+  .nav-btn.skip-btn {
+    color:var(--muted);
+  }
+
+  /* ─── SCORE SCREEN ────────────────── */
+  .score-screen {
+    display:none;
+    text-align:center;
+    padding:60px 20px;
+    animation: slideIn 0.4s ease;
+  }
+  .score-screen.show { display:block; }
+  .score-circle {
+    width:160px; height:160px;
+    border-radius:50%;
+    border:3px solid var(--accent);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 32px;
+    background:radial-gradient(circle, rgba(232,184,75,0.08), transparent);
+    box-shadow: 0 0 60px rgba(232,184,75,0.15);
+  }
+  .score-number {
+    font-family:'Playfair Display',serif;
+    font-size:52px;
+    font-weight:900;
+    color:var(--accent);
+    line-height:1;
+  }
+  .score-denom {
+    font-size:16px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .score-title {
+    font-family:'Playfair Display',serif;
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .score-subtitle { font-size:15px; color:var(--muted); margin-bottom:32px; }
+  .score-breakdown {
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-bottom:36px;
+    flex-wrap:wrap;
+  }
+  .score-stat {
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 28px;
+    min-width:120px;
+  }
+  .score-stat-num {
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    font-weight:700;
+  }
+  .score-stat-num.green { color:var(--success); }
+  .score-stat-num.red { color:var(--danger); }
+  .score-stat-label { font-size:12px; color:var(--muted); margin-top:4px; }
+
+  /* ─── WELCOME SCREEN ──────────────── */
+  .welcome-screen {
+    text-align:center;
+    padding:60px 20px;
+    max-width:700px;
+    margin:0 auto;
+  }
+  .welcome-eyebrow {
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:16px;
+  }
+  .welcome-title {
+    font-family:'Playfair Display',serif;
+    font-size:48px;
+    font-weight:900;
+    line-height:1.15;
+    margin-bottom:18px;
+    background:linear-gradient(135deg, #fff, var(--accent));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .welcome-subtitle {
+    font-size:16px;
+    color:var(--muted);
+    line-height:1.7;
+    margin-bottom:40px;
+  }
+  .stats-row {
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+  }
+  .stat-card {
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 24px;
+    text-align:center;
+    min-width:110px;
+  }
+  .stat-card-num {
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent);
+  }
+  .stat-card-label {
+    font-size:12px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .start-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:linear-gradient(135deg, var(--accent), #c4963a);
+    color:#0a0c10;
+    border:none;
+    padding:15px 40px;
+    border-radius:10px;
+    font-family:'DM Sans',sans-serif;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all 0.2s;
+    letter-spacing:0.3px;
+  }
+  .start-btn:hover {
+    filter:brightness(1.08);
+    transform:translateY(-2px);
+    box-shadow:0 8px 32px rgba(232,184,75,0.3);
+  }
+  .chapter-selector-welcome {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-bottom:32px;
+  }
+
+  /* ─── MINI REVIEW BAR ─────────────── */
+  .review-bar {
+    display:none;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 20px;
+    margin-bottom:20px;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .review-bar.show { display:flex; }
+  .dot-row { display:flex; gap:4px; flex-wrap:wrap; flex:1; }
+  .dot {
+    width:12px; height:12px;
+    border-radius:3px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    cursor:pointer;
+    transition:transform 0.15s;
+  }
+  .dot:hover { transform:scale(1.3); }
+  .dot.answered-correct { background:var(--success); border-color:var(--success); }
+  .dot.answered-wrong { background:var(--danger); border-color:var(--danger); }
+  .dot.current { border-color:var(--accent); box-shadow:0 0 6px rgba(232,184,75,0.5); }
+
+  /* ─── RESPONSIVE ──────────────────── */
+  @media(max-width:640px) {
+    header { padding:16px 20px; }
+    .question-card { padding:24px 20px; }
+    .q-text { font-size:15px; }
+    .welcome-title { font-size:34px; }
+    .header-stats { gap:10px; }
+    .stat-pill { padding:5px 10px; font-size:12px; }
+    .nav-row { flex-wrap:wrap; }
+    .nav-btn { flex:1; justify-content:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚗️</div>
+    <div>
+      <div class="logo-text">PharmBoard</div>
+      <div class="logo-sub">Industrial Pharmacy · MCQ Trainer</div>
+    </div>
+  </div>
+  <div class="header-stats" id="headerStats" style="display:none;">
+    <div class="stat-pill">
+      <div class="stat-dot" style="background:var(--success);"></div>
+      <span id="hCorrect">0</span> correct
+    </div>
+    <div class="stat-pill">
+      <div class="stat-dot" style="background:var(--danger);"></div>
+      <span id="hWrong">0</span> wrong
+    </div>
+    <div class="stat-pill" style="cursor:pointer;" onclick="showWelcome()" title="Back to menu">
+      ☰ Menu
+    </div>
+  </div>
+</header>
+
+<div class="main-container">
+
+  <!-- WELCOME -->
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-eyebrow">Board Exam Preparation 2025</div>
+    <h1 class="welcome-title">Master Industrial<br>Pharmacy</h1>
+    <p class="welcome-subtitle">Practice with official ministry exam questions covering Milling, Drying, and Filtration & Clarification — with detailed answer explanations.</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-num">120+</div>
+        <div class="stat-card-label">Questions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">3</div>
+        <div class="stat-card-label">Chapters</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">2023–25</div>
+        <div class="stat-card-label">Exam Years</div>
+      </div>
+    </div>
+
+    <div class="section-label">Select Chapter</div>
+    <div class="chapter-selector-welcome">
+      <button class="chapter-btn active" data-ch="all" onclick="selectChapter(this)">All Chapters</button>
+      <button class="chapter-btn" data-ch="milling" onclick="selectChapter(this)">⚙️ Milling</button>
+      <button class="chapter-btn" data-ch="drying" onclick="selectChapter(this)">🌡️ Drying</button>
+      <button class="chapter-btn" data-ch="filtration" onclick="selectChapter(this)">🔬 Filtration & Clarification</button>
+    </div>
+
+    <button class="start-btn" onclick="startQuiz()">
+      Start Practice Session →
+    </button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizView" style="display:none;">
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="progress-label" id="progressLabel">Question 1 of 30</span>
+        <span class="progress-fraction" id="progressFraction">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="review-bar show" id="reviewBar">
+      <span style="font-size:11px;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;">Progress</span>
+      <div class="dot-row" id="dotRow"></div>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="nav-row">
+      <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
+      <button class="nav-btn skip-btn" id="skipBtn" onclick="skipQuestion()">Skip →</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- SCORE -->
+  <div class="score-screen" id="scoreScreen">
+    <div class="score-circle">
+      <div class="score-number" id="scorePct">--</div>
+      <div class="score-denom" id="scoreLabel">--</div>
+    </div>
+    <h2 class="score-title" id="scoreTitle">Session Complete</h2>
+    <p class="score-subtitle" id="scoreSubtitle">Here's how you performed</p>
+    <div class="score-breakdown">
+      <div class="score-stat">
+        <div class="score-stat-num green" id="scoreCorrect">0</div>
+        <div class="score-stat-label">Correct</div>
+      </div>
+      <div class="score-stat">
+        <div class="score-stat-num red" id="scoreWrong">0</div>
+        <div class="score-stat-label">Wrong</div>
+      </div>
+      <div class="score-stat">
+        <div class="score-stat-num" style="color:var(--muted);" id="scoreSkipped">0</div>
+        <div class="score-stat-label">Skipped</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="nav-btn primary" onclick="startQuiz()">Retry Session</button>
+      <button class="nav-btn" onclick="showWelcome()">← Back to Menu</button>
+      <button class="nav-btn" onclick="reviewWrong()">Review Wrong Answers</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────
+const ALL_QUESTIONS = [
+  // ══════════ MILLING ══════════
+  {ch:"milling",year:"2023 S1",q:"The milling mechanisms could be comminution mechanisms:",opts:["Cutting","Attrition","Compression","Impact","All of them"],ans:4,exp:"All listed forces—cutting, attrition, compression, and impact—are recognized mechanisms of comminution (size reduction) that may occur during milling. Different mills use different combinations of these forces."},
+  {ch:"milling",year:"2023 S1",q:"Regarding milling techniques, which technique is applied to overcome the polymorphism problem during milling?",opts:["Using a hammer mill","Using wet milling","Using cutter mill","Increase milling temperature","None of the above"],ans:1,exp:"Wet milling is used to control polymorphism because adding a liquid medium can stabilize a particular polymorph and prevent unwanted solid-state transformations that dry milling may induce."},
+  {ch:"milling",year:"2023 S1",q:"What is milling?",opts:["The process of increasing the size of solids","The process of reducing the size of solids","The process of converting solids into liquids","The process of separating solids from liquids","The process of randomization of dissimilar materials"],ans:1,exp:"Milling is defined as the process of reducing the particle size of solid materials. It is a form of comminution aimed at producing smaller, more uniform particles."},
+  {ch:"milling",year:"2023 S1",q:"What is the conventionally used unit for expressing particle size in milling?",opts:["Micron","Millimeter","Meter","Mesh","Nanometer"],ans:3,exp:"In milling, particle size is conventionally expressed in mesh (sieve size), which describes the number of openings per linear inch in a sieve. Microns are also common for finer powders, but mesh is the conventional milling unit."},
+  {ch:"milling",year:"2023 S1",q:"Which methods can be used for measuring the size distribution of particles in milling?",opts:["Microscopy","Sieving","Sedimentation","Sieving and sedimentation","Sieving, sedimentation, and microscopy"],ans:4,exp:"All three main methods—sieving, sedimentation (e.g., laser diffraction or Andreasen pipette), and microscopy—can be used to measure particle size distribution in milled products."},
+  {ch:"milling",year:"2023 S1",q:"What is closed-circuit milling?",opts:["Passing material once through the mill","Passing material multiple times through the mill","Passing discharge from the milling chamber through a size separation device or classifier","Reducing material without a discharge chute","All of the above"],ans:2,exp:"In closed-circuit milling, the product from the mill is passed through a classifier or size separator. Oversized particles are returned to the mill for further reduction, ensuring a consistent final particle size."},
+  {ch:"milling",year:"2023 S1",q:"What happens to materials with low melting points during milling?",opts:["They remain unchanged","They become soft and plastic","They get degraded","They become explosive","They get hydrated"],ans:1,exp:"Materials with low melting points can absorb the heat generated during milling and become soft and plastic, which impedes size reduction and may cause the material to stick inside the mill."},
+  {ch:"milling",year:"2023 S1",q:"What factor can hinder comminution and produce a sticky mass upon milling?",opts:["Particle shape","Moisture content","Polymorphism","Temperature","All of the above"],ans:1,exp:"Excessive moisture content is the primary factor that can produce a sticky mass during milling. When moisture exceeds ~5%, wet milling conditions arise, and above 50%, conventional dry milling becomes impractical."},
+  {ch:"milling",year:"2023 S1",q:"What is the effect of an increase in moisture on the rate of milling to a specified product size?",opts:["It increases the rate of milling","It decreases the rate of milling","It has no effect","It depends on the type of material","Increase moisture to 5% leads to wet milling"],ans:1,exp:"Moisture generally decreases the rate of dry milling because it causes particles to adhere together (clumping), reducing the efficiency of size reduction and clogging mill components."},
+  {ch:"milling",year:"2023 S1",q:"Which type of mill is used for tough, fibrous materials?",opts:["Roller mills","Cutter mills","Hammer mills","Ball mills","Fluid energy mills"],ans:1,exp:"Cutter mills (also called cutting mills) are specifically designed for tough, fibrous materials such as plant roots and crude drugs. They provide a cutting/shearing action that is most effective for fibrous textures."},
+  {ch:"milling",year:"2023 S1",q:"What does the yield point in the stress-strain curve indicate?",opts:["Stiffness of a solid","Resistance to permanent deformation","Energy of fracture","Impact strength","Elastic deformation"],ans:1,exp:"The yield point on a stress-strain curve marks the transition from elastic (reversible) deformation to plastic (permanent) deformation. It is therefore a measure of the resistance to permanent deformation."},
+  {ch:"milling",year:"2023 S1",q:"Which mill can be used for size reduction of material from fresh plant source?",opts:["Colloidal mill","Hammer mill","Cutter mill","Roller mill","Ball mill"],ans:2,exp:"Cutter mills are preferred for fresh plant material because these materials are tough and fibrous. The cutting/shearing mechanism of the cutter mill efficiently handles such materials."},
+  {ch:"milling",year:"2023 S2",q:"In a closed system milling process, materials that are processed include which of the following?",opts:["Hygroscopic","Easily oxidized","Explosive","Volatile materials","All of the above"],ans:4,exp:"A closed system is used for materials that are hygroscopic (absorb moisture), easily oxidized, explosive, or volatile. The controlled environment prevents moisture ingress, oxidation, explosion risk, and vapor loss."},
+  {ch:"milling",year:"2023 S2",q:"The property that allows the material to remain deformed without fracture even after the force is removed is:",opts:["Flexibility","Stress","Elasticity","Plasticity","Strain"],ans:3,exp:"Plasticity refers to the property of a material to remain permanently deformed after the applied force is removed, without fracturing. This differs from elasticity, where the material returns to its original shape."},
+  {ch:"milling",year:"2023 S2",q:"Which of the following milling mechanisms involves material subjected to pressure where the surfaces are moving relative to each other, resulting in shear forces that break the particles?",opts:["Attrition","Compression","Cutting","Impact","None of the above"],ans:0,exp:"Attrition is the mechanism where particles are broken by shear forces generated between two surfaces moving relative to each other. It produces fine particles and is used in mills like the ball mill at high speeds."},
+  {ch:"milling",year:"2023 S2",q:"What is the mechanism of action of the Hammer mill?",opts:["Compression","Impact","Shear","Attrition","Combined impact and attrition"],ans:4,exp:"The primary mechanism of a hammer mill is combined impact and attrition. Fast-rotating hammers impact and break particles, while attrition between particles and mill surfaces contributes additional size reduction."},
+  {ch:"milling",year:"2024 S1",q:"If the moisture content of a solid to be milled is larger than 50%, the milling is:",opts:["Good","Bad","No milling at all","No relationship","Only mixing happens"],ans:0,exp:"When moisture content exceeds 50%, the preferred process becomes wet milling, which actually gives good results. The material essentially exists as a suspension or slurry, and wet milling techniques are applied."},
+  {ch:"milling",year:"2024 S1",q:"Milling equipment is classified according to the size of the final product to:",opts:["Coarse","Intermediate","Fine","All the above","None of the above"],ans:3,exp:"Milling equipment is classified into coarse, intermediate, and fine mills based on the particle size of the final product produced, allowing selection of the appropriate mill for the desired output."},
+  {ch:"milling",year:"2024 S1",q:"Hammer mill mechanism is:",opts:["Compression","Impact","Shear","Attrition","Cutting"],ans:1,exp:"The primary mechanism of a hammer mill is impact. Fast-rotating hammers strike and shatter particles. At higher speeds, some attrition also occurs."},
+  {ch:"milling",year:"2024 S1",q:"Hammer mill can be used for more fine particle size reduction in presence of:",opts:["Low speed and thin screen","High speed and thick screen","Low speed and thick screen","High speed and thin screen","Moisture"],ans:3,exp:"Higher tip speed increases impact force, and a thinner (smaller mesh) screen restricts particle exit until they are sufficiently small—together producing finer particles in a hammer mill."},
+  {ch:"milling",year:"2024 S1",q:"Which type of mill is capable of producing powders with all particles below a few micrometers quickly?",opts:["Cutter mill","Roller mill","Hammer mill","Ball mill","Fluid-energy mill"],ans:4,exp:"Fluid-energy mills (micronizers) can reduce particles to below 5 µm rapidly. They use high-velocity jets of compressed air or steam to cause inter-particle collisions via attrition, achieving sub-micron particle sizes."},
+  {ch:"milling",year:"2024 S1",q:"De-humidified air is required in grinding materials with which properties?",opts:["Thermo-labile","Fine powder","Hygroscopic","Fibrous materials","Soft materials"],ans:2,exp:"Hygroscopic materials readily absorb moisture from the air during milling, which can lead to clumping, reduced milling efficiency, and product instability. De-humidified air prevents this moisture uptake."},
+  {ch:"milling",year:"2024 S1",q:"Which technique is essential for milling of waxy material?",opts:["Cooling jackets","Dehumidified air","Dry milling","Wet milling","Inert gases"],ans:0,exp:"Waxy materials have low melting points and generate heat during milling, causing them to soften and smear. Cooling jackets around the mill chamber keep temperature low enough to maintain friability."},
+  {ch:"milling",year:"2024 S2",q:"The mechanism of action of cutter mill is:",opts:["Attrition","Impaction","Trituration","Shearing","Comminution"],ans:3,exp:"Cutter mills operate by shearing. A series of rotating knives cut against stationary knives, providing a scissor-like action that shears fibrous or tough materials into smaller pieces."},
+  {ch:"milling",year:"2024 S2",q:"When specifications demand free-flowing spheroidal particles, which mill is best?",opts:["Cutting","Compression","Impact","Attrition","All except cutting"],ans:3,exp:"Attrition mills (such as the fluid energy mill) produce free-flowing spheroidal (rounded) particles because the gentle grinding action rounds off particle edges rather than creating irregular fracture surfaces."},
+  {ch:"milling",year:"2025 S1",q:"Critical speed of the ball mill is the speed at which:",opts:["Balls begin to centrifuge with the mill","Balls cascade over one another","Balls are carried up the sides and fall freely onto material","Balls start tumbling","None of the above"],ans:0,exp:"Critical speed of a ball mill is defined as the minimum speed at which the balls begin to centrifuge along with the mill shell—meaning they rotate with the drum and lose their grinding action. Optimal milling occurs at about 2/3 of critical speed."},
+  {ch:"milling",year:"2025 S1",q:"The following is a disadvantage of particle size reduction:",opts:["Increase particles surface area","Initiate dusting and thermal degradation","Improve powder flow","Improve powder degree of mixing","Increase dissolution rate"],ans:1,exp:"While milling has many benefits, a key disadvantage is that it can initiate dusting (creating airborne fine particles posing inhalation hazards) and thermal degradation (heat generated may decompose sensitive drugs)."},
+  {ch:"milling",year:"2025 S1",q:"What gases are recommended for milling oxidizable and heat-labile materials?",opts:["Oxygen and helium","Hydrogen","Carbon dioxide and nitrogen","Oxygen and propane","Methane and propane"],ans:2,exp:"Inert gases such as carbon dioxide (CO₂) and nitrogen (N₂) are used in closed systems to mill oxidizable and heat-labile materials. These gases displace oxygen, preventing oxidation and reducing explosion risk."},
+  {ch:"milling",year:"2025 S1",q:"What does the term 'polymorphism' refer to in the context of milling?",opts:["Changes in particle size during milling","Changes in crystalline structure due to milling","Changes in moisture content during milling","Changes in the flowability of particles","Changes in the mechanical properties of the material"],ans:1,exp:"Polymorphism in milling refers to changes in the crystalline form (solid-state structure) of a drug caused by the mechanical stress of milling. Different polymorphs have different solubility, stability, and bioavailability profiles."},
+  {ch:"milling",year:"2025 S2",q:"Identify the WRONG feature of a roller mill:",opts:["Gap between first two rollers is less than the last two rollers'","Rollers are rotated at different speeds","Rollers are made of a hard abrasion-resistant material","Scrapper is placed close to the last roller","Can be used for mixing and milling"],ans:0,exp:"In a roller mill, the gap between successive rollers actually increases from the first to last pair (or the first pair has a larger gap to allow initial breakdown), not a smaller gap. The other statements are all correct features of roller mills."},
+  {ch:"milling",year:"2025 S2",q:"Select a mill for a low melting drug:",opts:["Hammer mill","Roller mill","Ball mill","Fluid energy mill","None of the above"],ans:3,exp:"Fluid energy mills are ideal for low-melting-point (thermolabile) drugs because compressed air/steam jets generate a cooling effect through Joule-Thomson expansion, keeping the milling chamber cool without the need for additional cooling equipment."},
+  {ch:"milling",year:"2025 S2",q:"In open-circuit milling, the size of particles compared to closed system is:",opts:["Smaller","Larger","Similar","Ultrafine","None above"],ans:1,exp:"Open-circuit milling passes material through the mill only once without returning oversized particles, resulting in larger and less uniform particle sizes compared to closed-circuit milling."},
+  {ch:"milling",year:"2025 S2",q:"Which statement regarding the hammer mill is incorrect?",opts:["Woven type of screen","Can be used to mill dry materials, wet filter-press cakes, ointments, and slurries","Hammer mills are compact with a high capacity","Size reduction of 20 to 40 µm may be achieved","A hammer mill can be used for granulation"],ans:0,exp:"Hammer mills use perforated screens (punched or slotted holes), NOT woven screens. Woven wire cloth is a different type of filter/sieve medium. All other listed features of the hammer mill are correct."},
+
+  // ══════════ DRYING ══════════
+  {ch:"drying",year:"2023 S1",q:"When drying rate is equal to zero, the temperature and moisture content:",opts:["Decreased","Increased during drying","Remain constant","Equal to 100%","Equal to 50%"],ans:2,exp:"When the drying rate reaches zero, the material has reached equilibrium moisture content (EMC). At this point, the rate of evaporation equals the rate of re-adsorption—temperature and moisture content remain constant."},
+  {ch:"drying",year:"2023 S1",q:"Which best defines psychrometry?",opts:["Determines the vapor concentration and carrying capacity of the gas (air)","Actual air temperature","Equilibrium moisture content","Bound water","None of the above"],ans:0,exp:"Psychrometry is the study of the thermodynamic properties of moist air, particularly its vapor concentration and carrying capacity—i.e., how much moisture air can hold at a given temperature and pressure."},
+  {ch:"drying",year:"2023 S1",q:"Spray dryer is classified as:",opts:["Specialized dryer","Moved bed dryer","Static bed dryer","Pneumatic dryer","All of the above"],ans:3,exp:"A spray dryer is a type of pneumatic dryer. Fine droplets of feed solution are atomized into a stream of hot air, drying them almost instantaneously. The gas carries and dries the particles simultaneously."},
+  {ch:"drying",year:"2023 S1",q:"Which type of dryer results in uniform distribution of heat?",opts:["Moving-bed dryers","Fluidized-bed dryers","Pneumatic dryers","Static-bed dryers","All of the above"],ans:1,exp:"Fluidized bed dryers achieve uniform heat distribution because all particles are suspended and fully surrounded by hot air, ensuring constant and even heat and mass transfer to every particle."},
+  {ch:"drying",year:"2023 S1",q:"All the following statements are true regarding drying EXCEPT:",opts:["The extraction of liquid from a solid is a form of drying","Drying and evaporation are different terms","Thermal and non-thermal methods could be used for drying","Drying is the complete removal of liquid from the material","In drying moisture is transferred from the material into an unsaturated vapor phase"],ans:3,exp:"Drying does NOT necessarily involve complete removal of all liquid. It reduces moisture to an acceptable level (equilibrium moisture content). Complete removal is neither always possible nor always desirable."},
+  {ch:"drying",year:"2023 S1",q:"The ratio of the weight of water in sample to weight of dry sample × 100% is known as:",opts:["Dry weight","Wet weight","LOD","Moisture Content (MC)","None of the above"],ans:3,exp:"Moisture Content (MC) is expressed on a dry-weight basis: MC = (weight of water / weight of dry sample) × 100%. Loss on Drying (LOD) uses wet weight as the denominator instead."},
+  {ch:"drying",year:"2023 S1",q:"What is the difference between wet-bulb temperature and dry-bulb temperature?",opts:["Wet-bulb is actual air temperature; dry-bulb is measured with a wet wick","Dry-bulb is actual air temperature; wet-bulb is measured with a bulb covered by a water-saturated wick","Wet-bulb is the dew point temperature; dry-bulb is equilibrium heat transfer","Dry-bulb is the dew point temperature; wet-bulb is equilibrium heat transfer","None of the above"],ans:1,exp:"The dry-bulb thermometer measures the actual ambient air temperature. The wet-bulb thermometer has its bulb wrapped in a water-saturated wick; evaporation cools the bulb and gives a lower temperature. The difference indicates air humidity."},
+  {ch:"drying",year:"2023 S1",q:"At what point in the drying curve does 'dry spot' first appear?",opts:["Equilibrium moisture content","Critical moisture content","First falling rate period","Second falling rate period","Constant rate period"],ans:1,exp:"The critical moisture content (CMC) is the point where the continuous liquid film on the solid surface begins to break, and the first dry spots appear. After this, the drying rate falls as less surface is available for evaporation."},
+  {ch:"drying",year:"2023 S1",q:"What is industrial processing that provides reduction in bulk and weight of materials?",opts:["Mixing","Milling","Drying","Filtration","Sterilization"],ans:2,exp:"Drying removes moisture from materials, reducing both their bulk (volume) and weight. This is particularly important for reducing transportation costs and improving storability."},
+  {ch:"drying",year:"2023 S2",q:"Which of the following is NOT a stage in the freeze-drying process?",opts:["Sub-zero freezing","Reducing the atmospheric pressure","Adding heat","Secondary heating","Reconstitution"],ans:4,exp:"Reconstitution (adding water back to the product for use) is NOT a step in the freeze-drying process itself—it occurs before patient use. The actual freeze-drying stages are: pre-freezing, primary drying (sublimation under vacuum), and secondary drying."},
+  {ch:"drying",year:"2023 S2",q:"The driving force for heat transfer during the drying process is:",opts:["Temperature differential","The rate of evaporation","The latent heat of vaporization","The rate of diffusion of moisture","All of the above"],ans:0,exp:"According to drying theory, the driving force for heat transfer is the temperature differential (ΔT) between the heat source (hot air) and the material being dried. This is analogous to Fourier's law of heat conduction."},
+  {ch:"drying",year:"2024 S1",q:"What is the way in which microwaves interact with material itself leading to drying?",opts:["Internal heat","External heat","Radiation","Convection","Carrying air"],ans:0,exp:"Microwaves penetrate the material and cause molecular vibration (especially water molecules) through dielectric heating, generating heat internally within the material. This distinguishes microwave drying from all conventional methods."},
+  {ch:"drying",year:"2024 S1",q:"What is the dew point?",opts:["The temperature to which air-water vapor must be heated to become saturated","The temperature to which air-water vapor must be cooled to become saturated","The temperature at which air is completely unsaturated","The temperature at which relative humidity is 100%","None of the above"],ans:1,exp:"The dew point is the temperature to which air must be cooled (at constant pressure and humidity) for it to become saturated with water vapor—i.e., relative humidity reaches 100% and condensation begins."},
+  {ch:"drying",year:"2024 S1",q:"In which type of dryer is energy converted into internal heat, permitting extremely rapid heat transfer throughout the material?",opts:["Fluidized Bed dryer","Freeze dryer","Spray dryer","Tray dryer","Microwave drying"],ans:4,exp:"In microwave drying, electromagnetic energy is absorbed by water molecules within the material and converted to internal heat directly, allowing extremely rapid and uniform heating throughout the entire material at once."},
+  {ch:"drying",year:"2024 S1",q:"Freeze drying is mainly used to dry materials such as:",opts:["Antibiotics","Hormones","Proteins","Heat-sensitive materials","All of them"],ans:4,exp:"Freeze drying (lyophilization) is ideal for all heat-sensitive biological materials including antibiotics, hormones, proteins, vaccines, and other thermolabile products that would be destroyed by conventional heat-based drying."},
+  {ch:"drying",year:"2025 S1",q:"Products to be freeze-dried must be:",opts:["Aqueous as the water is lost by sublimation","Non-aqueous to prevent ice crystal formation","Viscous in order to maintain cake structure","Strongly buffered in order to maintain pH during drying","None of the above"],ans:0,exp:"Products for freeze-drying must be aqueous because the process works by freezing the water into ice and then sublimating it directly from solid (ice) to vapor under vacuum. Non-aqueous solutions cannot be freeze-dried by this mechanism."},
+  {ch:"drying",year:"2025 S1",q:"Turbo-Tray dryer is an example of:",opts:["Static-bed dryer","Fluidized-bed dryer","Specialized dryer","Pneumatic dryer","Moved-bed dryer"],ans:4,exp:"A Turbo-Tray dryer is a moved-bed (moving-bed) dryer. The product is slowly moved from one tray to the next by rotating wiper blades, continuously exposing fresh material to the hot air stream."},
+  {ch:"drying",year:"2025 S1",q:"Regarding theory of drying, what is 'A' in the equation dW/dθ = kA(Hs−Hg)?",opts:["The humidity differential","The area of evaporating surface","The rate of diffusion","The enthalpy","The specific volume"],ans:1,exp:"In the drying rate equation dW/dθ = kA(Hs−Hg): k is the mass transfer coefficient, A is the area of the evaporating surface, Hs is the humidity at the surface, and Hg is the humidity of the drying gas. A larger area means faster drying."},
+  {ch:"drying",year:"2025 S1",q:"The rate of drying may be accelerated by:",opts:["Decreasing the inlet air temperature","Dehumidifying the inlet air","Increasing the thickness of the material to be dried","Applying the dew point temperature","Slowing the air velocity"],ans:1,exp:"Dehumidifying the inlet air reduces its relative humidity, increasing the driving force (humidity gradient) for moisture evaporation. Higher temperature, higher air velocity, and thinner material layers also accelerate drying—but increasing thickness slows it."},
+  {ch:"drying",year:"2025 S1",q:"What type of particles are produced by spray drying?",opts:["Intact spheres, spheres with buds, ruptured hollow spheres, or sphere fragments","Irregularly shaped particles","Granular particles","Coarse particles","None of the above"],ans:0,exp:"Spray drying produces characteristic spherical morphologies depending on drying conditions: intact spheres (slow drying), spheres with surface indentations or buds, ruptured hollow spheres, or sphere fragments (fast drying with rapid vapor expansion)."},
+  {ch:"drying",year:"2025 S2",q:"Used mainly for taste masking and sustained-release formulations:",opts:["Static-bed dryers","Spray Dryers","Chilling spray (Spray congealing)","Flash Dryers","Lyophilization"],ans:2,exp:"Spray congealing (chilling spray) is used to encapsulate active ingredients within a wax or polymer matrix for taste masking and to create sustained-release formulations. The molten coating solidifies around the drug particles."},
+  {ch:"drying",year:"2025 S2",q:"How is Loss on Drying (LOD) calculated?",opts:["(wt of water / wt of dry sample) × 100","(wt of water / wt of wet sample) × 100","(wt of wet sample / wt of dry sample) × 100","(wt of wet sample / wt of water) × 100","(wt of dry sample / wt of water) × 100"],ans:1,exp:"LOD = [(weight of water in sample) / (weight of wet sample)] × 100%. This is expressed on a wet-weight basis. Moisture Content (MC), in contrast, uses the dry weight as the denominator."},
+  {ch:"drying",year:"2025 S2",q:"What does the variable q represent in the evaporation rate equation?",opts:["Rate of evaporation","Latent heat of vaporization","Overall rate of heat transfer","BTU per hour","Temperature differential"],ans:2,exp:"In the drying equation, q represents the overall rate of heat transfer to the evaporating surface (in BTU/hour or W). This heat supplies the latent heat of vaporization needed to convert liquid moisture to vapor."},
+  {ch:"drying",year:"2025 S2",q:"What is the primary advantage of fluidized bed dryers?",opts:["Low energy consumption","Less requirement for airflow","High moisture content retention","Use to handle solutions","High drying rate due to efficient heat and mass transfer"],ans:4,exp:"The primary advantage of fluidized bed dryers is their high drying rate resulting from efficient heat and mass transfer. Because all particles are suspended and exposed to hot air on all sides, drying is fast, uniform, and produces free-flowing particles."},
+
+  // ══════════ FILTRATION ══════════
+  {ch:"filtration",year:"2023 S1",q:"The resistance in any filtration process represents:",opts:["Cake","Filter","Cake and filter resistance","Cake, filter and area of the filter","Cake, filter, area of the filter and viscosity"],ans:2,exp:"According to Darcy's filtration equation, the total resistance to flow in a filtration system comes from both the filter cake (solids deposited) and the filter medium (the filter itself). Both resistances must be overcome by the driving pressure."},
+  {ch:"filtration",year:"2023 S1",q:"Sand is one of the filtration procedures and is classified as:",opts:["Pressure","Gravity","Vacuum","Centrifugation filtration","Gravity aided by pressure"],ans:1,exp:"Sand filters (e.g., in water treatment) rely on gravity as the driving force. Liquid passes down through a sand bed under the force of gravity alone, without applied pressure or vacuum."},
+  {ch:"filtration",year:"2023 S1",q:"What is the process called when recovery of solids is desired during filtration?",opts:["Cake filtration","Liquid filtration","Ultrafiltration","Nanofiltration","Solid filtration"],ans:0,exp:"Cake filtration (also called surface filtration) is used when the primary goal is to recover the solid particles. The solids accumulate on the filter medium as a 'cake' which is then harvested."},
+  {ch:"filtration",year:"2023 S1",q:"Membrane filters are used for which of the following types of filtration?",opts:["Microfiltration","Ultrafiltration","Nanofiltration","Reverse osmosis","All of the above"],ans:4,exp:"Membrane filters are versatile and are used across all filtration scales: microfiltration (removes bacteria, 0.1–10 µm), ultrafiltration (removes large molecules), nanofiltration (removes small molecules), and reverse osmosis (removes ions)."},
+  {ch:"filtration",year:"2023 S1",q:"Regarding sterile filtration, all the following are true EXCEPT:",opts:["Preferred for heat labile liquids","Uses 0.2 or 0.4 micrometer filter media","Prefer depth filters","Prefilters may be involved","Only the final unit needs to be sterile"],ans:2,exp:"Sterile filtration prefers membrane filters (surface filters), NOT depth filters. Membrane filters provide absolute particle retention at 0.2 µm (or 0.45 µm for some colloidal solutions), giving a reliable sterility assurance level."},
+  {ch:"filtration",year:"2023 S1",q:"Regarding bubble point pressure, all the following terms are true EXCEPT:",opts:["It is a non-destructive test","It is a function of porosity of filter medium","Used for large volumes","Used for small volumes","Depend on pressure"],ans:2,exp:"The bubble point test is used for small-volume systems and single-cartridge filters. For large-volume or multi-cartridge systems, the diffusion test (forward flow test) is preferred because it is more practical and sensitive."},
+  {ch:"filtration",year:"2023 S1",q:"The most important filter aid commonly used is:",opts:["Water soluble polymer","Cellulose","Asbestos","Diatomite","Calcined rice"],ans:3,exp:"Diatomite (diatomaceous earth) is the most widely used filter aid. It consists of the fossilized remains of diatoms (siliceous microorganisms) and forms a highly porous, rigid cake that allows excellent filtrate flow."},
+  {ch:"filtration",year:"2023 S2",q:"In which filtration mechanism does the filter material act as its own filter medium?",opts:["Surface straining","Cake filtration","Impingement","Depth straining","None of the above"],ans:1,exp:"In cake filtration, an initial layer of solids deposits on the filter medium and itself becomes the main filtering medium for subsequent particles. The accumulated cake provides most of the filtration efficiency."},
+  {ch:"filtration",year:"2023 S2",q:"Commercial filtration equipment is classified by:",opts:["The end product desired","The method of operation","Type of operation","The type of driving force","All of the above"],ans:4,exp:"Commercial filtration equipment is classified by multiple criteria: the end product desired (cake vs. clear filtrate), method of operation (batch vs. continuous), type of operation (washing, drying), and the type of driving force (gravity, pressure, vacuum, centrifugal)."},
+  {ch:"filtration",year:"2023 S2",q:"Which is NOT true regarding the bubble point test?",opts:["Is direct measure of the largest pore in the filter","Liquid is held inside the channel by surface tension","Minimum pressure that removes liquid from pore must overcome surface tension","Success in holding rated pressure indicates inefficient membrane","None of the above"],ans:3,exp:"FAILURE to hold rated pressure (not success) indicates an inefficient membrane or improper assembly. In the bubble point test, if gas bubbles appear at a pressure BELOW the rated bubble point pressure, the filter has a defect."},
+  {ch:"filtration",year:"2023 S2",q:"Asbestos has limited application as a filter aid because:",opts:["Has good retention on coarse screens","Its high cost","Leaching of fibers into the filtrate that might be toxic","Is followed by membrane filtration","All causes of cost, toxicity and additional processing"],ans:4,exp:"Asbestos use is restricted due to multiple factors: high cost compared to alternatives, the risk of carcinogenic fibers leaching into the filtrate, and the requirement for additional membrane filtration to remove any leached fibers—making it impractical."},
+  {ch:"filtration",year:"2024 S1",q:"Which can be applied to increase the pressure differential across the filter medium?",opts:["Increase filtration temperature","Vacuum on the far side of the filter","Pumping the fluid into the filter","All of the above","B and C only"],ans:4,exp:"The pressure differential can be increased by applying vacuum on the downstream side, pumping fluid under pressure into the upstream side, or both. Temperature increase affects viscosity but is not a direct pressure method; B and C are the correct pressure-based approaches."},
+  {ch:"filtration",year:"2024 S1",q:"Which is NOT an application of ultrafiltration?",opts:["Concentration of heat labile products","Removing of pyrogen","Sterilization of parenteral products","Recover antibiotic from fermentation broths","None of the above"],ans:2,exp:"Ultrafiltration cannot sterilize parenteral products because its pore size (0.001–0.1 µm) is too large to retain viruses, and it may not consistently remove all bacteria. Sterilization filtration requires 0.2 µm membrane filters."},
+  {ch:"filtration",year:"2024 S1",q:"Filtration system used for a high degree of clarification and for harvesting of the cake is:",opts:["Plate and frame press","Rotary drum filter","Disk filter","Gravity filter","Perforated basket filter"],ans:0,exp:"The plate and frame filter press provides both a high degree of clarification and good cake harvesting ability. It is the most widely used pressure filter in industry, allowing multistage filtration and recovery of the solid cake."},
+  {ch:"filtration",year:"2024 S2",q:"The integrity test is considered as:",opts:["Non-destructive test","Non-productive test","Sterility test","Bioindicator","Official test"],ans:0,exp:"Integrity tests (bubble point and diffusion tests) are non-destructive tests—they verify that the filter membrane is intact and properly assembled without damaging it, allowing the same filter to be used for production afterward."},
+  {ch:"filtration",year:"2024 S2",q:"In surface straining, what happens to particles larger than the pores of the medium?",opts:["They pass quickly through the medium","They get dissolved in the medium","They deposit on the surface of the medium","They get absorbed by the medium","All of above"],ans:2,exp:"In surface straining (surface filtration), particles larger than the pore size cannot pass through and are retained on the surface of the filter medium, depositing as a layer. This is the basic principle of cake filtration."},
+  {ch:"filtration",year:"2025 S1",q:"The particles travel along the pore until they reach a point too small to proceed—this describes:",opts:["Surface Straining","Surface filtration","Depth Straining","Depth Filtration","Cake filtration"],ans:2,exp:"Depth straining occurs when particles enter the pores of the filter medium but become trapped at a point where the pore narrows below the particle's size. The particles lodge within the depth of the medium rather than on its surface."},
+  {ch:"filtration",year:"2025 S1",q:"Filtration should be performed at pressure lower than the bubble point of a membrane to:",opts:["Prevent gas from passing through","Reduce filtration volume","Reduce time","Reduce viscosity","Cake removal"],ans:0,exp:"If filtration pressure exceeds the bubble point of the membrane, gas (air or nitrogen) will be forced through the wet membrane pores, bypassing liquid filtration entirely. Operating below the bubble point ensures only liquid passes through."},
+  {ch:"filtration",year:"2025 S1",q:"What increases as solids are deposited on the filter medium?",opts:["Permeability","Filtration efficiency","Resistance","Pressure","Porosity"],ans:2,exp:"As solids deposit and the filter cake builds up, the total resistance to filtration increases progressively. This is why filtration rate decreases over time in a batch operation at constant pressure."},
+  {ch:"filtration",year:"2025 S1",q:"Which is NOT a desirable property of filter media?",opts:["Chemically inert","Allows easy discharge of cake","Sufficient mechanical strength","Swell when in contact with filtrate","Offer minimum resistance"],ans:3,exp:"Swelling on contact with filtrate is highly UNDESIRABLE in a filter medium—it would block pores, reduce flow rate, and potentially distort the filter structure. An ideal filter medium should be dimensionally stable when wet."},
+  {ch:"filtration",year:"2025 S2",q:"Usually recommended for high volume systems (e.g., multicartridges) with high filtration areas:",opts:["Clarity test","Leak test","Dissolution test","Diffusion test","Bubble point test"],ans:3,exp:"The diffusion test (forward flow test) is recommended for large filter systems and multicartridge assemblies because it measures dissolved gas diffusion through wetted membranes and is more practical than the bubble point test for large surface areas."},
+  {ch:"filtration",year:"2025 S2",q:"The formation of a layer of particles on the filter surface, with larger pores bridged by smaller particles is called:",opts:["Surface straining","Depth straining","Cake filtration","Depth filtration","Both B & C"],ans:2,exp:"Cake filtration is characterized by the formation of a cake layer on the filter surface where larger pores are initially bridged by groups of smaller particles (arching), and then successive layers build up to form the filter cake."},
+  {ch:"filtration",year:"2025 S2",q:"Which filter media is commonly used for sterilizing filtration in pharmaceutical production?",opts:["Paper filter","Woven cotton","Wire screens","Membrane filter","Fiberglass"],ans:3,exp:"Membrane filters with a 0.2 µm pore size are the standard for sterilizing filtration in pharmaceutical production. They provide absolute bacterial retention and are validated for sterility assurance."},
+  {ch:"filtration",year:"2025 S2",q:"In the filtration process, the fluid that passes through the filter medium is called?",opts:["Effluent","Cake","Sediment","Slurry","Residue"],ans:0,exp:"The clarified liquid that passes through the filter medium is called the effluent (or filtrate). The solid material retained on the filter is called the residue or cake."},
+  {ch:"filtration",year:"2025 S2",q:"The primary function of a filter aid is to:",opts:["Alter the filtrate chemically","Reduce resistance to flow by a porous cake formation","Dissolve solid impurities in the filtrate","Increase the viscosity of the filtrate","Absorb unwanted chemicals from the liquid"],ans:1,exp:"Filter aids (e.g., diatomite, perlite) function by forming a highly porous, incompressible filter cake that reduces overall resistance to liquid flow and prevents blinding (clogging) of the filter medium, thereby improving filtration rate and filtrate clarity."},
+];
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let questions = [];
+let current = 0;
+let answers = {}; // index → chosen answer (or 'skip')
+let correctCount = 0;
+let wrongCount = 0;
+let selectedChapter = 'all';
+
+function selectChapter(btn) {
+  document.querySelectorAll('.chapter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedChapter = btn.dataset.ch;
+}
+
+function showWelcome() {
+  document.getElementById('welcomeScreen').style.display = '';
+  document.getElementById('quizView').style.display = 'none';
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('headerStats').style.display = 'none';
+}
+
+function startQuiz() {
+  // Filter by chapter
+  if (selectedChapter === 'all') {
+    questions = shuffle([...ALL_QUESTIONS]);
+  } else {
+    questions = shuffle(ALL_QUESTIONS.filter(q => q.ch === selectedChapter));
+  }
+  current = 0;
+  answers = {};
+  correctCount = 0;
+  wrongCount = 0;
+
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('quizView').style.display = '';
+  document.getElementById('headerStats').style.display = 'flex';
+
+  updateHeaderStats();
+  buildDots();
+  renderQuestion();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function buildDots() {
+  const row = document.getElementById('dotRow');
+  row.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.id = `dot-${i}`;
+    d.title = `Q${i+1}`;
+    d.onclick = () => goTo(i);
+    row.appendChild(d);
+  });
+  updateDots();
+}
+
+function updateDots() {
+  questions.forEach((_, i) => {
+    const d = document.getElementById(`dot-${i}`);
+    if (!d) return;
+    d.className = 'dot';
+    if (answers[i] !== undefined) {
+      if (answers[i] === 'skip') { d.style.background='var(--muted)'; d.style.borderColor='var(--muted)'; }
+      else if (answers[i] === questions[i].ans) d.classList.add('answered-correct');
+      else d.classList.add('answered-wrong');
+    }
+    if (i === current) d.classList.add('current');
+  });
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  const container = document.getElementById('questionContainer');
+  const answered = answers[current] !== undefined && answers[current] !== 'skip';
+  const skipped = answers[current] === 'skip';
+  const total = questions.length;
+  const pct = Math.round(((current) / total) * 100);
+
+  // Progress
+  document.getElementById('progressLabel').textContent = `Question ${current+1} of ${total}`;
+  document.getElementById('progressFraction').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  // Chapter badge color
+  const chColors = { milling:'var(--accent)', drying:'#e87d4b', filtration:'var(--accent2)' };
+  const chLabels = { milling:'Milling', drying:'Drying', filtration:'Filtration & Clarification' };
+
+  const letters = ['A','B','C','D','E'];
+
+  let optionsHtml = q.opts.map((opt, i) => {
+    let cls = 'option-btn';
+    let chosen = answers[current];
+    if (chosen !== undefined && chosen !== 'skip') {
+      if (i === q.ans) cls += ' correct';
+      else if (i === chosen && chosen !== q.ans) cls += ' wrong';
+    }
+    return `<button class="${cls}" onclick="selectAnswer(${i})" ${answered ? 'disabled' : ''}>
+      <span class="option-letter">${letters[i]}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+
+  let resultHtml = '';
+  if (answered) {
+    const correct = answers[current] === q.ans;
+    resultHtml = `<div class="result-badge ${correct ? 'correct-badge' : 'wrong-badge'}">
+      ${correct ? '✓ Correct!' : '✗ Incorrect — Correct answer: ' + letters[q.ans]}
+    </div>`;
+  }
+
+  let expHtml = `<div class="explanation-box ${answered ? 'show' : ''}">
+    <div class="exp-header">📖 Explanation</div>
+    <div class="exp-answer">✓ ${letters[q.ans]} — ${q.opts[q.ans]}</div>
+    <div class="exp-text">${q.exp}</div>
+  </div>`;
+
+  container.innerHTML = `
+    <div class="question-card" key="${current}">
+      <div class="q-meta">
+        <div class="q-number">Q${current+1}</div>
+        <div class="q-year">${q.year}</div>
+        <div class="q-chapter-badge" style="color:${chColors[q.ch]};background:${chColors[q.ch]}18;border-color:${chColors[q.ch]}33;">${chLabels[q.ch]}</div>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-grid">${optionsHtml}</div>
+      ${resultHtml}
+      ${expHtml}
+    </div>`;
+
+  // Nav buttons
+  document.getElementById('prevBtn').disabled = current === 0;
+  const isLast = current === questions.length - 1;
+  const nextBtn = document.getElementById('nextBtn');
+  const skipBtn = document.getElementById('skipBtn');
+
+  if (isLast) {
+    nextBtn.textContent = 'Finish Session →';
+    nextBtn.disabled = false;
+    nextBtn.onclick = () => { if(Object.keys(answers).length < questions.length) markSkipRemainder(); showScore(); };
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.disabled = !answered;
+    nextBtn.onclick = () => navigate(1);
+  }
+  skipBtn.style.display = answered ? 'none' : '';
+
+  updateDots();
+  updateHeaderStats();
+}
+
+function selectAnswer(idx) {
+  if (answers[current] !== undefined) return;
+  answers[current] = idx;
+  const q = questions[current];
+  if (idx === q.ans) correctCount++;
+  else wrongCount++;
+  renderQuestion();
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function skipQuestion() {
+  if (answers[current] !== undefined) return;
+  answers[current] = 'skip';
+  navigate(1);
+}
+
+function navigate(dir) {
+  current = Math.max(0, Math.min(questions.length - 1, current + dir));
+  renderQuestion();
+}
+
+function goTo(i) {
+  current = i;
+  renderQuestion();
+}
+
+function markSkipRemainder() {
+  for (let i = 0; i < questions.length; i++) {
+    if (answers[i] === undefined) answers[i] = 'skip';
+  }
+}
+
+function updateHeaderStats() {
+  document.getElementById('hCorrect').textContent = correctCount;
+  document.getElementById('hWrong').textContent = wrongCount;
+}
+
+function showScore() {
+  const total = questions.length;
+  const answered = Object.values(answers).filter(a => a !== 'skip').length;
+  const pct = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
+  const skipped = Object.values(answers).filter(a => a === 'skip').length;
+
+  document.getElementById('quizView').style.display = 'none';
+  document.getElementById('scoreScreen').classList.add('show');
+
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('scoreLabel').textContent = `${correctCount} / ${answered}`;
+  document.getElementById('scoreCorrect').textContent = correctCount;
+  document.getElementById('scoreWrong').textContent = wrongCount;
+  document.getElementById('scoreSkipped').textContent = skipped;
+
+  let title = pct >= 90 ? 'Outstanding!' : pct >= 75 ? 'Well Done!' : pct >= 60 ? 'Keep Practicing' : 'Needs More Review';
+  let subtitle = pct >= 90 ? 'You are exam-ready.' : pct >= 75 ? 'Strong performance — review missed topics.' : pct >= 60 ? 'Focus on weak areas and retry.' : 'Review the chapters carefully and try again.';
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreSubtitle').textContent = subtitle;
+}
+
+function reviewWrong() {
+  const wrongQ = questions.filter((_, i) => answers[i] !== undefined && answers[i] !== 'skip' && answers[i] !== questions[i].ans);
+  if (wrongQ.length === 0) { alert('No wrong answers to review!'); return; }
+  questions = wrongQ;
+  current = 0;
+  answers = {};
+  correctCount = 0;
+  wrongCount = 0;
+  document.getElementById('scoreScreen').classList.remove('show');
+  document.getElementById('quizView').style.display = '';
+  buildDots();
+  renderQuestion();
+}
+
+// Init
+showWelcome();
+</script>
+</body>
+</html>
